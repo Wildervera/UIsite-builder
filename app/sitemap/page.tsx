@@ -217,9 +217,31 @@ export default function SitemapPage() {
       order: page.sections.length,
     }
 
+    let newSections: Section[]
+
+    if (afterSectionId) {
+      // Insert after specific section
+      const afterIndex = page.sections.findIndex(s => s.id === afterSectionId)
+      if (afterIndex !== -1) {
+        newSections = [
+          ...page.sections.slice(0, afterIndex + 1),
+          newSection,
+          ...page.sections.slice(afterIndex + 1)
+        ]
+      } else {
+        newSections = [...page.sections, newSection]
+      }
+    } else {
+      // Add at the end
+      newSections = [...page.sections, newSection]
+    }
+
+    // Update order property
+    const sectionsWithOrder = newSections.map((s, index) => ({ ...s, order: index }))
+
     const updatedPage = {
       ...page,
-      sections: [...page.sections, newSection],
+      sections: sectionsWithOrder,
     }
 
     handleUpdatePage(updatedPage)

@@ -119,7 +119,13 @@ export function PageCard({ page, onUpdate, onContextMenu, onAddSection, onAskAI 
               section={section}
               onUpdate={handleSectionUpdate}
               onContextMenu={(e, sectionId) => onContextMenu(e, page.id, 'section', sectionId)}
-              onAddSection={() => {}}
+              onAddSection={() => onAddSection(page.id, {
+                id: 'blank',
+                name: 'Blank Section',
+                category: 'Blank',
+                description: 'Empty section to customize',
+                defaultColor: 'none'
+              }, section.id)}
               onDragStart={(e) => handleDragStart(e, section.id)}
               onDragEnd={() => {}}
               onDragOver={handleDragOver}
